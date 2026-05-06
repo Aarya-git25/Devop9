@@ -1,0 +1,35 @@
+terraform {
+required_providers {
+aws = {
+source = "hashicorp/aws"
+version = "~> 5.0"
+}
+}
+}
+provider "aws" {
+region = "us-east-1"
+}
+# 1. BUILD: Your existing S3 Bucket
+resource "aws_s3_bucket" "my_tf_bucket" {
+bucket = "devops_exp9"
+tags = {
+Name = "My Terraform Bucket"
+Environment = "Dev"
+}
+}
+# 2. BUILD: Your first EC2 Instance
+resource "aws_instance" "my_server" {
+ami = "ami-0440d3b780d96b29d"
+instance_type = "t3.micro"
+tags = {
+Name = "Terraform-Server-1"
+}
+}
+# 3. CHANGE: Adding a second EC2 Instance
+resource "aws_instance" "my_second_server" {
+ami = "ami-0440d3b780d96b29d"
+instance_type = "t3.micro"
+tags = {
+Name = "Terraform-Server-2"
+}
+}
